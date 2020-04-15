@@ -21,9 +21,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         try {
           final String accessToken = await userRepository.login(
               event.username, event.password);
+          print(accessToken);
           await authenticationManagement.persistToken(accessToken: accessToken);
           yield SignSuccessState(token: accessToken);
         } catch(error){
+          print(error);
           yield SignFailureState(username: event.username, password: event.password);
         }
       }

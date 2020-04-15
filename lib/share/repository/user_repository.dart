@@ -5,13 +5,14 @@ import 'package:http/http.dart' as http;
 
 class UserRepository {
 
-  final URL = "http://192.168.43.2:20201";
+  final String URL = "http://192.168.43.2:20201";
 
   Future<String> login(username, password) async {
 
     final response = await http.post("$URL/api/oauth/token", headers: {
       "Content-Type": "Application/json"
     }, body: jsonEncode({
+      "grant_type": 'password',
       "username": username,
       "password": password
     }));

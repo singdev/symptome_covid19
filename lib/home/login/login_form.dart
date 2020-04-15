@@ -15,10 +15,14 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final TextEditingController _usernameController = new TextEditingController();
+  final TextEditingController _passwordController = new TextEditingController();
+
   String state = "login";
 
   final placeholders = {
     "login": {
+      "title": "Je me connecte",
       "username": "Indiquez votre identifiant",
       "password": "Indiquez le mot de passe",
       "button": "Connectez vous",
@@ -26,6 +30,7 @@ class _LoginFormState extends State<LoginForm> {
       "button2": "Générez en un"
     },
     "register": {
+      "title": "Je m'inscris",
       "username": "Choisissez un identifiant",
       "password": "Indiquez le mot de passe",
       "button": "Inscrivez vous",
@@ -42,14 +47,27 @@ class _LoginFormState extends State<LoginForm> {
           margin: EdgeInsets.all(20.0),
           elevation: 4.0,
           child: Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 64.0, bottom: 8.0),
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0, bottom: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(placeholders[state]["title"],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.grey[700]
+                  ),),
+                ),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
+                    controller: _usernameController,
                     decoration: InputDecoration(labelText: placeholders[state]["username"],
                         contentPadding: EdgeInsets.all(14.0),
                         errorText: widget.error ? "Identifiant incorrecte" : null,
@@ -59,6 +77,7 @@ class _LoginFormState extends State<LoginForm> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
+                    controller: _passwordController,
                     decoration: InputDecoration(labelText:  placeholders[state]["password"],
                         contentPadding: EdgeInsets.all(14.0),
                         errorText: widget.error ? "Identifiant incorrecte": null,
@@ -70,10 +89,16 @@ class _LoginFormState extends State<LoginForm> {
                   padding: const EdgeInsets.all(8.0),
                   child: RaisedButton(
                     onPressed: (){
+                      final String username = _usernameController.text;
+                      final String password = _passwordController.text;
                       if(state == "login") {
-                        BlocProvider.of<LoginBloc>(context).add(LoginButtonPressed());
+                        BlocProvider.of<LoginBloc>(context).add(LoginButtonPressed(
+                          username: username, password: password
+                        ));
                       } else if(state == "register") {
-                        BlocProvider.of<LoginBloc>(context).add(RegisterButtonPressed());
+                        BlocProvider.of<LoginBloc>(context).add(RegisterButtonPressed(
+                          username: username, password: password
+                        ));
                       }
                     },
                     child: Text( placeholders[state]["button"]),
