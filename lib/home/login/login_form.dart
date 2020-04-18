@@ -1,3 +1,4 @@
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symptomecovid19/home/login/login_event.dart';
@@ -41,6 +42,14 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final wordPair = WordPair.random();
+
+    if(state == "register"){
+      setState(() {
+        _usernameController.text = wordPair.join();
+      });
+    }
+
     return  ListView(
       children: <Widget>[
         Card(

@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:symptomecovid19/home/workspace/workspace_bloc.dart';
+import 'package:symptomecovid19/home/workspace/workspace_event.dart';
 
 class GetStartScreen extends StatelessWidget {
   @override
@@ -31,6 +34,7 @@ class GetStartScreen extends StatelessWidget {
                 child: RaisedButton(
                   onPressed: (){
                     //Start new tracking
+                    BlocProvider.of<WorkspaceBloc>(context).add(StartButtonPressed());
                   },
                   child: Text("Commencer"),
                   color: Theme.of(context).primaryColor,

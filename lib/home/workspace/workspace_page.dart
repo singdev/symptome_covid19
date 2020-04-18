@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symptomecovid19/home/home_page.dart';
 import 'package:symptomecovid19/home/workspace/get_start_screen.dart';
+import 'package:symptomecovid19/home/workspace/symptom_tracking/symptom_tracking_page.dart';
 import 'package:symptomecovid19/home/workspace/workspace_bloc.dart';
 import 'package:symptomecovid19/home/workspace/workspace_event.dart';
 import 'package:symptomecovid19/home/workspace/workspace_state.dart';
@@ -12,11 +13,10 @@ class WorkSpacePage extends StatefulWidget {
 }
 
 class _WorkSpacePageState extends State<WorkSpacePage> {
-
   WorkspaceBloc _bloc;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     _bloc = new WorkspaceBloc();
@@ -27,35 +27,33 @@ class _WorkSpacePageState extends State<WorkSpacePage> {
     return BlocProvider<WorkspaceBloc>(
       create: (context) => _bloc..add(WorkspaceStart()),
       child: Scaffold(
-        appBar: AppBar(title: Text("Symptom COVID-19 Tracking"),),
+        appBar: AppBar(
+          title: Text("Symptom COVID-19 Tracking"),
+        ),
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
               DrawerHeader(
-                child: Column(
-                  children: <Widget>[
-                    Text("Symptom COVID-19 Tracking", style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white
-                    ),),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text("Pour ceux qui ressentent les symptômes du covid-19",
-                      style: TextStyle(
-                        color: Colors.white
-                      ),),
-                    )
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColorDark
-                ),
-              ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          "Pour ceux qui ressentent les symptômes du covid-19",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      )
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                          image: AssetImage("images/logo_sing.png"),
+                          fit: BoxFit.cover))),
               ListTile(
                 title: Text("Déconnexion"),
                 leading: Icon(Icons.power_settings_new),
-                onTap: (){
+                onTap: () {
                   _bloc.add(Logout());
                 },
               )
@@ -63,28 +61,35 @@ class _WorkSpacePageState extends State<WorkSpacePage> {
           ),
         ),
         body: BlocBuilder<WorkspaceBloc, IWorkspaceState>(
-          builder: (context, state){
-            if(state is WorkspaceLoading) {
+          builder: (context, state) {
+            if (state is WorkspaceLoading) {
               return Scaffold(
-                body: Center(child: CircularProgressIndicator(),),
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             }
 
-            if(state is GetStartState){
+            if (state is GetStartState) {
               return GetStartScreen();
             }
 
-            if(state is LogoutState){
-              WidgetsBinding.instance.addPostFrameCallback((_){
-                Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => HomePage()));
+            if (state is LogoutState) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushReplacement(context,
+                    new MaterialPageRoute(builder: (context) => HomePage()));
               });
             }
 
-            if(state is SymptomTrackingState){
-              return Container(child: Text("Workspace"),);
+            if (state is SymptomTrackingState) {
+              return SymptomTrackingPage(
+                tracking: state.tracking,
+              );
             }
 
-            return Center(child: CircularProgressIndicator(),);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),

@@ -1,12 +1,14 @@
 
+import 'package:symptomecovid19/share/entity/tracking.dart';
+
 class IWorkspaceState {}
 
 class WorkspaceLoading extends IWorkspaceState {}
 
 class SymptomTrackingState extends IWorkspaceState {
-  final String trackingId;
+  final Tracking tracking;
 
-  SymptomTrackingState({ this.trackingId });
+  SymptomTrackingState({ this.tracking });
 }
 
 class GetStartState extends IWorkspaceState {}
