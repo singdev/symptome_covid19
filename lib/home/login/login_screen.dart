@@ -13,8 +13,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-  final String coronavirusImageUrl = "https://images.unsplash.com/photo-1584118624012-df056829fbd0?ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80";
+  final String coronavirusImageUrl =
+      "https://images.unsplash.com/photo-1584118624012-df056829fbd0?ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80";
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +28,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 2,
                 child: Stack(
                   children: <Widget>[
-                    Image.network(coronavirusImageUrl,
-                    fit: BoxFit.cover, alignment: Alignment.center,
-                    width: double.infinity,
-                    height: double.infinity,),
-
-                    Container(color: Color.fromARGB(128, 0, 0, 0),),
-
+                    Image.network(
+                      coronavirusImageUrl,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
+                    Container(
+                      color: Color.fromARGB(128, 0, 0, 0),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 32.0),
                       child: Column(
@@ -42,21 +45,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("Symptôme Covid-19", textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w200,
-                              fontSize: 24.0
-                            ),),
+                            child: Text(
+                              "Symptôme Covid-19",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 24.0),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("Pour suivre l'évolution des symptômes du COVID-19 au quotidien",
-                            textAlign: TextAlign.center,
+                            child: Text(
+                              "Pour suivre l'évolution des symptômes du COVID-19 au quotidien",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16.0
-                              ),),
+                                  color: Colors.white, fontSize: 16.0),
+                            ),
                           )
                         ],
                       ),
@@ -69,42 +74,52 @@ class _LoginScreenState extends State<LoginScreen> {
               )
             ],
           ),
-
           Column(
             children: <Widget>[
               Expanded(
                 child: Container(),
               ),
               Expanded(
-                flex: 2,
-                child: BlocProvider<LoginBloc>(create: (
-                    BuildContext context) => LoginBloc(),
-                  child: BlocBuilder<LoginBloc, LoginState>(
-                    builder: (context, state) {
+                  flex: 2,
+                  child: BlocProvider<LoginBloc>(
+                    create: (BuildContext context) => LoginBloc(),
+                    child: BlocBuilder<LoginBloc, LoginState>(
+                      builder: (context, state) {
+                        if (state is InitialState) {
+                          return LoginForm(
+                            error: false,
+                          );
+                        }
 
-                      if(state is InitialState){
-                        return LoginForm(error: false,);
-                      }
+                        if (state is LoginLoadingState) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
 
-                      if(state is LoginLoadingState){
-                        return Center(child: CircularProgressIndicator(),);
-                      }
+                        if (state is SignFailureState) {
+                          return LoginForm(
+                            error: true,
+                          );
+                        }
 
-                      if(state is SignFailureState){
-                          return LoginForm(error: true,);
-                      }
+                        if (state is SignSuccessState) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            Navigator.pushReplacement(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => WorkSpacePage(
+                                          username: state.username,
+                                        )));
+                          });
+                        }
 
-                      if(state is SignSuccessState){
-                        WidgetsBinding.instance.addPostFrameCallback((_){
-                          Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => WorkSpacePage()));
-                        });
-                      }
-
-                      return Center(child: CircularProgressIndicator(),);
-                    },
-                  ),
-                )
-              ),
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    ),
+                  )),
             ],
           )
         ],

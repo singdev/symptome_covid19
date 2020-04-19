@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
           }
 
           if (state is WorkspaceState) {
-            return WorkSpacePage();
+            return WorkSpacePage(username: state.username,);
           }
 
           return Center(

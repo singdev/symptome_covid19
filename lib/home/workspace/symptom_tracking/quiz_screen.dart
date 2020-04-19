@@ -17,8 +17,32 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int _currentDay;
 
+  List<String> _month = [
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre"
+  ];
+
+  List<String> _weeks = [
+    "Lundi",
+    "Mardi", "Mercredi",
+    "Jeudi",
+    "Vendredi",
+    "Samedi",
+    "Dimanche"
+  ];
+
   calculateCurrentDayInde() {
-    DateTime today = new DateTime.now();
+    DateTime today = DateTime.now();
     DateTime firstDate = widget.tracking.firstDate;
 
     return today.difference(firstDate).inDays;
@@ -27,7 +51,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _questionView({String title, bool value, Function onChange}) {
     return Card(
         elevation: 4.0,
-        margin: EdgeInsets.all(8),
+        margin: EdgeInsets.symmetric(vertical: 8),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(children: <Widget>[
@@ -81,6 +105,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final DateTime today = DateTime.now();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -93,6 +118,25 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
       body: ListView(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, bottom: 16.0, right: 16.0, top: 16.0),
+            child: Text(
+              "Jour ${_currentDay + 1}",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColorDark,
+                  fontSize: 18.0),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Text(
+              "${_weeks[today.weekday-1]} ${today.day} ${_month[today.month]} ${today.year}",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w100),
+            ),
+          ),
           _questionView(
               title: "Température",
               value: widget.tracking.days[_currentDay].temperature,

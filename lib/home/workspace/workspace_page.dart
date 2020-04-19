@@ -8,6 +8,11 @@ import 'package:symptomecovid19/home/workspace/workspace_event.dart';
 import 'package:symptomecovid19/home/workspace/workspace_state.dart';
 
 class WorkSpacePage extends StatefulWidget {
+
+  final String username;
+
+  const WorkSpacePage({Key key, @required this.username}) : super(key: key);
+
   @override
   _WorkSpacePageState createState() => _WorkSpacePageState();
 }
@@ -28,19 +33,23 @@ class _WorkSpacePageState extends State<WorkSpacePage> {
       create: (context) => _bloc..add(WorkspaceStart()),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Symptom COVID-19 Tracking"),
+          title: Text("Symptôme COVID-19"),
         ),
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
               DrawerHeader(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Text("Bienvenue!"),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Text(
-                          "Pour ceux qui ressentent les symptômes du covid-19",
-                          style: TextStyle(color: Colors.black),
+                          "${widget.username}",
+                          style: TextStyle(color: Colors.white,
+                          fontSize: 18.0),
                         ),
                       )
                     ],
@@ -48,7 +57,7 @@ class _WorkSpacePageState extends State<WorkSpacePage> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       image: DecorationImage(
-                          image: AssetImage("images/logo_sing.png"),
+                          image: AssetImage("images/wallpaper.png"),
                           fit: BoxFit.cover))),
               ListTile(
                 title: Text("Déconnexion"),

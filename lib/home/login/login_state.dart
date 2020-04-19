@@ -14,6 +14,7 @@ class SignFailureState extends LoginState {
 
 class SignSuccessState extends LoginState {
   final String token;
+  final String username;
 
-  SignSuccessState({this.token});
+  SignSuccessState({this.token, this.username});
 }

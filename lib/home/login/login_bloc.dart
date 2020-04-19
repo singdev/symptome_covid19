@@ -23,9 +23,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               event.username, event.password);
           print(accessToken);
           await authenticationManagement.persistToken(accessToken: accessToken);
-          yield SignSuccessState(token: accessToken);
+          await userRepository.persistUsername(event.username);
+          yield SignSuccessState(token: accessToken, username: event.username);
         } catch(error){
-          print(error);
           yield SignFailureState(username: event.username, password: event.password);
         }
       }
@@ -39,7 +39,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           final String accessToken = await userRepository.login(
               event.username, event.password);
           await authenticationManagement.persistToken(accessToken: accessToken);
-          yield SignSuccessState(token: accessToken);
+          await userRepository.persistUsername(event.username);
+          yield SignSuccessState(token: accessToken, username: event.username);
         } catch(error){
           yield SignFailureState(username: event.username, password: event.password);
         }

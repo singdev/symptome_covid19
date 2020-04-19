@@ -24,7 +24,7 @@ class _SymptomTrackingPageState extends State<SymptomTrackingPage> {
     } else if(_currentNavIndex == 1){
         return DaysScreen(tracking: widget.tracking,);
     } else if(_currentNavIndex == 2){
-        return DiagnosticScreen();
+        return DiagnosticScreen(tracking: widget.tracking,);
     }
     return null;
   }

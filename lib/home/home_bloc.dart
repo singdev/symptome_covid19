@@ -21,7 +21,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       await new Future.delayed(const Duration(seconds : 5));
       bool isConnected = await authenticationManagement.hasToken();
       if(isConnected){
-        yield WorkspaceState();
+        String username = await userRepository.getUsername();
+        yield WorkspaceState(username: username);
       } else {
         yield SignState();
       }
