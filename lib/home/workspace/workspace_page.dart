@@ -43,13 +43,20 @@ class _WorkSpacePageState extends State<WorkSpacePage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Bienvenue!"),
+                      Text("Bienvenue!", style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        letterSpacing: 0.15
+                      ),),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Text(
                           "${widget.username}",
-                          style: TextStyle(color: Colors.white,
-                          fontSize: 18.0),
+                          style: TextStyle(
+                              color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 24.0),
                         ),
                       )
                     ],
@@ -59,6 +66,14 @@ class _WorkSpacePageState extends State<WorkSpacePage> {
                       image: DecorationImage(
                           image: AssetImage("images/wallpaper.png"),
                           fit: BoxFit.cover))),
+              ListTile(
+                title: Text("Recommencer le suivi"),
+                leading: Icon(Icons.favorite),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  _bloc..add(StartButtonPressed());
+                },
+              ),
               ListTile(
                 title: Text("Déconnexion"),
                 leading: Icon(Icons.power_settings_new),
@@ -80,7 +95,7 @@ class _WorkSpacePageState extends State<WorkSpacePage> {
             }
 
             if (state is GetStartState) {
-              return GetStartScreen();
+              return GetStartScreen(hasLastTracking: state.hasLastTracking,);
             }
 
             if (state is LogoutState) {

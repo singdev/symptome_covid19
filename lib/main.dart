@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Symptôme covid-19',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.indigo,
       ),
       home: HomePage()
     );

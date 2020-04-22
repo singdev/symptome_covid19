@@ -34,6 +34,21 @@ class TrackingRepository {
     }
   }
 
+  Future<List<Tracking>> getAllTracking({ String token }) async {
+    final response = await http.get("$url/tracking/search/by-user", headers: {
+      "Content-Type": "Application/json",
+      "Authorization": "Bearer " + token
+    });
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      return List.generate(responseData.length,
+              (index) => Tracking.fromJson(responseData[index]));
+    } else {
+      throw new Exception(response.body);
+    }
+  }
+
   Future<Tracking> updateSymptomForCurrentDay(
       { String token, String id, Symptom symptom}) async {
     final response = await http.put("$url/tracking/$id", headers: {

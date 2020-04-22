@@ -48,9 +48,10 @@ class _DaysScreenState extends State<DaysScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final firstDate = new DateTime(widget.tracking.firstDate.year, widget.tracking.firstDate.month, widget.tracking.firstDate.day);
     return ListView(
       children: List.generate(14, (index) {
-        final DateTime date = getDate(widget.tracking.firstDate, index);
+        final DateTime date = getDate(firstDate, index);
         final String month = _month[date.month - 1];
         final int note = calculateNote(widget.tracking.days[index]);
         Color color = note < 50 ? Colors.green : Colors.red;

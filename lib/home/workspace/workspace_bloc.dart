@@ -31,10 +31,12 @@ class WorkspaceBloc extends Bloc<WorkspaceEvent, IWorkspaceState> {
               token: token, id: trackingId);
           yield SymptomTrackingState(tracking: tracking);
         } catch(error){
-          yield GetStartState();
+          yield GetStartState(hasLastTracking: false);
         }
       } else {
-        yield GetStartState();
+        String token = await authenticationManagement.getToken();
+        List<Tracking> list = await trackingRepository.getAllTracking(token: token);
+        yield GetStartState(hasLastTracking: list.isNotEmpty);
       }
     }
 
@@ -56,6 +58,17 @@ class WorkspaceBloc extends Bloc<WorkspaceEvent, IWorkspaceState> {
         yield SymptomTrackingState(tracking: tracking);
       } catch(error){
         print(error);
+      }
+    }
+
+    if(event is ContinueWithLastTracking){
+      yield WorkspaceLoading();
+      String token = await authenticationManagement.getToken();
+      List<Tracking> list = await trackingRepository.getAllTracking(token: token);
+      if(list.last != null) {
+        yield SymptomTrackingState(tracking: list.last);
+      } else {
+        yield GetStartState(hasLastTracking: false);
       }
     }
 

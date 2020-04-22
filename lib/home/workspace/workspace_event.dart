@@ -1,4 +1,5 @@
 import 'package:symptomecovid19/share/entity/symptom.dart';
+import 'package:symptomecovid19/share/entity/tracking.dart';
 
 class WorkspaceEvent {}
 
@@ -12,5 +13,7 @@ class UpdateSymptomButtonPressed extends WorkspaceEvent {
 
   UpdateSymptomButtonPressed({this.symptom, this.trackingId});
 }
+
+class ContinueWithLastTracking extends WorkspaceEvent {}
 
 class Logout extends WorkspaceEvent {}

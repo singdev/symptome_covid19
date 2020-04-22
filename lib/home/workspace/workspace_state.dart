@@ -11,6 +11,10 @@ class SymptomTrackingState extends IWorkspaceState {
   SymptomTrackingState({ this.tracking });
 }
 
-class GetStartState extends IWorkspaceState {}
+class GetStartState extends IWorkspaceState {
+  final bool hasLastTracking;
+
+  GetStartState({this.hasLastTracking});
+}
 
 class LogoutState extends IWorkspaceState {}

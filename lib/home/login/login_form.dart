@@ -67,9 +67,9 @@ class _LoginFormState extends State<LoginForm> {
                   child: Text(placeholders[state]["title"],
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.grey[700]
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.normal,
+                    letterSpacing: 0.25
                   ),),
                 ),
 
@@ -121,7 +121,13 @@ class _LoginFormState extends State<LoginForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Expanded(child: Text( placeholders[state]["other"], textAlign: TextAlign.end,)),
+                      Expanded(child: Text( placeholders[state]["other"],
+                        textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        letterSpacing: 0.25,
+                        fontWeight: FontWeight.normal
+                      ),)),
                       Expanded(
                         child: FlatButton(
                           onPressed: (){
@@ -133,7 +139,11 @@ class _LoginFormState extends State<LoginForm> {
                               }
                             });
                           },
-                          child: Text( placeholders[state]["button2"], textAlign: TextAlign.start,),
+                          child: Text( placeholders[state]["button2"], textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            letterSpacing: 0.5
+                          ),),
                           textColor: Theme.of(context).primaryColor,
                         ),
                       )

@@ -50,8 +50,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w200,
-                                  fontSize: 24.0),
+                                  fontWeight: FontWeight.normal,
+                                  letterSpacing: 0.25,
+                                  fontSize: 34.0),
                             ),
                           ),
                           Padding(
@@ -60,7 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               "Pour suivre l'évolution des symptômes du COVID-19 au quotidien",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.white, fontSize: 16.0),
+                                  color: Colors.white,
+                                fontSize: 16.0,
+                                letterSpacing: 0.15,
+                                fontWeight: FontWeight.normal
+                              ),
                             ),
                           )
                         ],
