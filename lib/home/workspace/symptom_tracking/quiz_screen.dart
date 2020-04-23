@@ -156,7 +156,7 @@ class _QuizScreenState extends State<QuizScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: Text(
-              "${_weeks[today.weekday-1]} ${today.day} ${_month[today.month]} ${today.year}",
+              "${_weeks[today.weekday-1]} ${today.day} ${_month[today.month-1]} ${today.year}",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 24.0, letterSpacing: 0),
             ),
